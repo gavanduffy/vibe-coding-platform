@@ -6,7 +6,7 @@ An end-to-end coding platform where users enter text prompts and an AI agent gen
 
 ## Features
 
-- Multi-model support via AI Gateway (Claude, GPT, Grok)
+- Multi-model support via OpenAI and Anthropic models
 - Secure code execution with Vercel Sandbox
 - Real-time live preview of generated apps and Expo Go workflows
 - File explorer for browsing project files
@@ -17,7 +17,8 @@ An end-to-end coding platform where users enter text prompts and an AI agent gen
 
 - [Next.js](https://nextjs.org) with Turbopack
 - [AI SDK](https://ai-sdk.dev) v6
-- [Vercel AI Gateway](https://vercel.com/docs/ai-gateway)
+- [OpenAI](https://platform.openai.com/docs)
+- [Anthropic](https://docs.anthropic.com/)
 - [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox)
 - [Tailwind CSS](https://tailwindcss.com)
 - [shadcn/ui](https://ui.shadcn.com)
@@ -38,7 +39,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - Claude Opus 4.6
 - Claude Sonnet 4.6
 - GPT-5.3 Codex
-- Grok 4.1 Reasoning
+- Model names can be typed directly into the selector
 
 ## Deploy
 

@@ -56,15 +56,19 @@ export function Welcome(props: {
               Expo Go-ready iOS and mobile applications.
             </p>
             <p className="text-base text-secondary-foreground">
-              It uses Vercel&apos;s AI Cloud services like{' '}
+              It uses direct provider APIs like{' '}
               <ExternalLink href="https://vercel.com/docs/vercel-sandbox">
                 Sandbox
               </ExternalLink>{' '}
               for secure code execution,{' '}
-              <ExternalLink href="https://vercel.com/docs/ai-gateway">
-                AI Gateway
+              <ExternalLink href="https://platform.openai.com/docs">
+                OpenAI
               </ExternalLink>{' '}
-              for Claude, GPT, and Grok model support,{' '}
+              and{' '}
+              <ExternalLink href="https://docs.anthropic.com/">
+                Anthropic
+              </ExternalLink>{' '}
+              for model support,{' '}
               <ExternalLink href="https://vercel.com/fluid">
                 Fluid Compute
               </ExternalLink>{' '}

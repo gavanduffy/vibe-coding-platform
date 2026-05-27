@@ -18,6 +18,7 @@ import { useChat } from '@ai-sdk/react'
 import { useLocalStorageValue } from '@/lib/use-local-storage-value'
 import { useCallback, useEffect } from 'react'
 import { useSharedChatContext } from '@/lib/chat-context'
+import { DEFAULT_MODEL } from '@/ai/constants'
 import { useSettings } from '@/components/settings/use-settings'
 import { useSandboxStore } from './state'
 
@@ -36,7 +37,9 @@ export function Chat({ className }: Props) {
   const validateAndSubmitMessage = useCallback(
     (text: string) => {
       if (text.trim()) {
-        sendMessage({ text }, { body: { modelId, reasoningEffort } })
+        sendMessage({
+          text,
+        }, { body: { modelId: modelId.trim() || DEFAULT_MODEL, reasoningEffort } })
         setInput('')
       }
     },

@@ -6,7 +6,7 @@ import {
   stepCountIs,
   streamText,
 } from 'ai'
-import { DEFAULT_MODEL, MODEL_NAMES, SUPPORTED_MODELS } from '@/ai/constants'
+import { DEFAULT_MODEL, MODEL_NAMES } from '@/ai/constants'
 import { NextResponse } from 'next/server'
 import { getModelOptions } from '@/ai/gateway'
 import { checkBotId } from 'botid/server'
@@ -27,9 +27,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: `Bot detected` }, { status: 403 })
   }
 
-  if (!SUPPORTED_MODELS.includes(modelId)) {
+  const requestedModelId = modelId.trim() || DEFAULT_MODEL
+
+  let modelOptions: ReturnType<typeof getModelOptions>
+  try {
+    modelOptions = getModelOptions(requestedModelId, { reasoningEffort })
+  } catch {
     return NextResponse.json(
-      { error: `Model ${modelId} not found.` },
+      { error: `Model ${requestedModelId} not found.` },
       { status: 400 }
     )
   }
@@ -39,7 +44,7 @@ export async function POST(req: Request) {
       originalMessages: messages,
       execute: async ({ writer }) => {
         const result = streamText({
-          ...getModelOptions(modelId, { reasoningEffort }),
+          ...modelOptions,
           system: prompt,
           messages: await convertToModelMessages(
             messages.map((message) => {
@@ -63,7 +68,7 @@ export async function POST(req: Request) {
             })
           ),
           stopWhen: stepCountIs(20),
-          tools: tools({ modelId, writer }),
+          tools: tools({ modelId: modelOptions.modelId, writer }),
           onError: (error) => {
             console.error('Error communicating with AI')
             console.error(JSON.stringify(error, null, 2))
@@ -75,7 +80,7 @@ export async function POST(req: Request) {
             sendReasoning: true,
             sendStart: false,
             messageMetadata: () => ({
-              model: MODEL_NAMES[modelId] ?? modelId,
+              model: MODEL_NAMES[modelOptions.modelId] ?? modelOptions.modelId,
             }),
           })
         )
