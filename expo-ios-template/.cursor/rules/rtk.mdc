@@ -1,0 +1,34 @@
+---
+description: Rules for Redux Toolkit, RTK Query, and state management
+globs: src/store/**/*, app/**/*.tsx, src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Redux Toolkit & RTK Query Rules
+
+## RTK Query Pattern
+
+1. All data fetching must use RTK Query.
+2. Because we use Supabase, we do not use `fetchBaseQuery`. We use `fakeBaseQuery()` in `baseApi.ts`.
+3. Every endpoint MUST use `queryFn` to execute the Supabase query.
+4. Organize APIs by domain using `injectEndpoints` (e.g., `itemsApi.ts`, `usersApi.ts`).
+5. Always handle Supabase errors by returning `{ error: { status: "CUSTOM_ERROR", error: error.message } }`.
+6. Always return `{ data }` on success.
+
+## Cache Management
+
+1. Define `tagTypes` in `baseApi.ts`.
+2. Queries must use `providesTags` (usually returning the list of IDs plus a generic list tag).
+3. Mutations must use `invalidatesTags` to trigger automatic refetching.
+
+## Local State & Persistence
+
+1. Use standard Redux slices for complex local UI state that needs to be shared.
+2. Use React `useState` for component-local state.
+3. Add slices to the `persistConfig.whitelist` in `store.ts` if they need to survive app restarts.
+4. NEVER persist the API cache (the `baseApi.reducerPath` is blacklisted by default).
+
+## Hooks
+
+1. Always use the typed hooks `useAppDispatch` and `useAppSelector` from `src/hooks/useRedux.ts`.
+2. Never use the raw `useDispatch` or `useSelector` from `react-redux`.

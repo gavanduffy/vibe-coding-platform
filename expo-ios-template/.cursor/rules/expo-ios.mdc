@@ -1,0 +1,26 @@
+---
+description: Rules for Expo configuration, iOS deployment, and EAS
+globs: app.json, eas.json, **/*.tsx
+alwaysApply: false
+---
+
+# Expo & iOS Rules
+
+## iOS Only Focus
+
+1. This project targets iOS ONLY.
+2. Never write Android-specific code (`Platform.OS === 'android'`).
+3. Never configure Android settings in `app.json` or `eas.json`.
+4. When designing UI, always account for the iOS notch and safe areas using `SafeAreaView` from `react-native-safe-area-context`.
+
+## EAS Configuration
+
+1. **Internal Distribution**: The `preview` profile in `eas.json` is configured for internal distribution (`"distribution": "internal"`). This requires ad-hoc provisioning and registered device UDIDs.
+2. **App Store**: The `production` profile is for App Store submission.
+3. **Updates**: The `eas update` system uses channels mapped to profiles (e.g., branch `preview` maps to channel `preview`).
+
+## UI Components
+
+1. Use `@expo/vector-icons` for icons (specifically `Ionicons` for iOS feel).
+2. Use `KeyboardAvoidingView` with `behavior="padding"` for forms on iOS.
+3. Keep navigation native-feeling using Expo Router's Stack and Tabs.

@@ -1,4 +1,5 @@
 import { Models } from '@/ai/constants'
+import { getModelOptions } from '@/ai/gateway'
 import { NextResponse } from 'next/server'
 import { checkBotId } from 'botid/server'
 import { generateText, Output } from 'ai'
@@ -17,17 +18,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: `Invalid request` }, { status: 400 })
   }
 
+  const { model, providerOptions } = getModelOptions(Models.AnthropicClaudeSonnet46)
+
   const result = await generateText({
     system: prompt,
-    model: Models.OpenAIGPT53Codex,
-    providerOptions: {
-      openai: {
-        include: ['reasoning.encrypted_content'],
-        reasoningEffort: 'low',
-        reasoningSummary: 'auto',
-        serviceTier: 'priority',
-      },
-    },
+    model,
+    providerOptions,
     messages: [{ role: 'user', content: JSON.stringify(parsedBody.data) }],
     output: Output.object({ schema: resultSchema }),
   })

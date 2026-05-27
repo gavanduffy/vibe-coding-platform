@@ -1,48 +1,33 @@
-import { createGatewayProvider } from '@ai-sdk/gateway'
-import { Models } from './constants'
+import { createAnthropic } from '@ai-sdk/anthropic'
+import { createOpenAI } from '@ai-sdk/openai'
 import type { JSONValue } from 'ai'
-import type { OpenAIResponsesProviderOptions } from '@ai-sdk/openai'
 import type { LanguageModelV3 } from '@ai-sdk/provider'
 
-const gateway = createGatewayProvider({
-  baseURL: process.env.AI_GATEWAY_BASE_URL,
+const anthropic = createAnthropic({
+  baseURL: process.env.ANTHROPIC_BASE_URL,
+  apiKey: process.env.ANTHROPIC_API_KEY,
   headers: {
-    'http-referer': 'https://oss-vibe-coding-platform.vercel.app/',
-    'x-title': 'Vibe Coding Platform',
+    'anthropic-beta': 'fine-grained-tool-streaming-2025-05-14',
   },
+})
+
+const openai = createOpenAI({
+  baseURL: process.env.OPENAI_BASE_URL,
+  apiKey: process.env.OPENAI_API_KEY,
 })
 
 export interface ModelOptions {
   model: LanguageModelV3
   providerOptions?: Record<string, Record<string, JSONValue>>
-  headers?: Record<string, string>
 }
 
 export function getModelOptions(
   modelId: string,
-  options?: { reasoningEffort?: 'low' | 'medium' | 'high' }
+  _options?: { reasoningEffort?: 'low' | 'medium' | 'high' }
 ): ModelOptions {
-  if (modelId === Models.OpenAIGPT53Codex) {
+  if (modelId.startsWith('claude')) {
     return {
-      model: gateway(modelId),
-      providerOptions: {
-        openai: {
-          include: ['reasoning.encrypted_content'],
-          reasoningEffort: options?.reasoningEffort ?? 'low',
-          reasoningSummary: 'auto',
-          serviceTier: 'priority',
-        } satisfies OpenAIResponsesProviderOptions,
-      },
-    }
-  }
-
-  if (
-    modelId === Models.AnthropicClaudeSonnet46 ||
-    modelId === Models.AnthropicClaudeOpus46
-  ) {
-    return {
-      model: gateway(modelId),
-      headers: { 'anthropic-beta': 'fine-grained-tool-streaming-2025-05-14' },
+      model: anthropic(modelId) as unknown as LanguageModelV3,
       providerOptions: {
         anthropic: {
           cacheControl: { type: 'ephemeral' },
@@ -52,6 +37,6 @@ export function getModelOptions(
   }
 
   return {
-    model: gateway(modelId),
+    model: openai(modelId) as unknown as LanguageModelV3,
   }
 }

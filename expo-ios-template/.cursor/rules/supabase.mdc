@@ -1,0 +1,33 @@
+---
+description: Rules for interacting with Supabase, writing migrations, and edge functions
+globs: supabase/**/*, src/store/api/**/*.ts
+alwaysApply: false
+---
+
+# Supabase Rules
+
+Follow these rules when working with the database or backend logic.
+
+## Database Migrations
+
+1. All schema changes MUST be done via SQL migrations in `supabase/migrations/`.
+2. Migrations must be named `YYYYMMDDHHMMSS_description.sql`.
+3. Every table MUST have `id uuid default uuid_generate_v4() primary key`.
+4. Every table MUST have `created_at` and `updated_at` columns with triggers.
+5. **CRITICAL**: Every table MUST have Row Level Security (RLS) enabled (`alter table public.name enable row level security;`).
+6. RLS policies must be explicitly defined for SELECT, INSERT, UPDATE, and DELETE operations.
+7. Use `auth.uid()` to scope data to the current user.
+
+## Edge Functions
+
+1. Only use Edge Functions for logic that cannot be handled by RLS (e.g., third-party API calls, complex transactions).
+2. Write functions in Deno TypeScript.
+3. Always include CORS headers.
+4. Always authenticate the user by extracting the JWT from the `Authorization` header.
+5. Use the `supabase` client instantiated with the user's JWT to inherit their RLS permissions.
+
+## Client Integration
+
+1. The client is initialized in `src/lib/supabase.ts` using Expo SecureStore for session persistence.
+2. NEVER use the `service_role` key in the client application.
+3. After applying migrations, always regenerate types: `npm run supabase:types` (or use the MCP tool).
