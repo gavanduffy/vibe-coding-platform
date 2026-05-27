@@ -6,7 +6,7 @@ import {
   stepCountIs,
   streamText,
 } from 'ai'
-import { DEFAULT_MODEL, MODEL_NAMES, SUPPORTED_MODELS } from '@/ai/constants'
+import { DEFAULT_MODEL, MODEL_NAMES } from '@/ai/constants'
 import { NextResponse } from 'next/server'
 import { getModelOptions } from '@/ai/gateway'
 import { checkBotId } from 'botid/server'
@@ -27,9 +27,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: `Bot detected` }, { status: 403 })
   }
 
-  if (!SUPPORTED_MODELS.includes(modelId)) {
+  if (!modelId || typeof modelId !== 'string' || !modelId.trim()) {
     return NextResponse.json(
-      { error: `Model ${modelId} not found.` },
+      { error: `Model ID is required.` },
       { status: 400 }
     )
   }
