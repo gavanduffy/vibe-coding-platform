@@ -1,0 +1,37 @@
+---
+description: General architecture rules for the Expo iOS application
+globs: *
+alwaysApply: true
+---
+
+# Architecture Rules
+
+These rules govern the entire Expo iOS project. You must follow them at all times.
+
+## Stack Requirements
+
+1. **Frontend Framework**: Expo (React Native)
+2. **Platform**: iOS ONLY. Never write Android-specific code or configurations.
+3. **State Management**: Redux Toolkit (RTK)
+4. **Data Fetching**: RTK Query (via `queryFn` wrapping Supabase client)
+5. **Persistence**: Redux Persist with `@react-native-async-storage/async-storage`
+6. **Backend**: Supabase (PostgreSQL + RLS + Edge Functions)
+7. **Routing**: Expo Router (file-based)
+
+## Code Organization
+
+- `app/`: Expo Router screens and layouts
+- `src/components/`: Reusable UI components
+- `src/store/`: Redux store, slices, and RTK Query APIs
+- `src/lib/`: Shared utilities, constants, Supabase client
+- `src/hooks/`: Custom React hooks
+- `src/types/`: TypeScript types (especially auto-generated database types)
+- `supabase/`: Database migrations and Edge Functions
+
+## Strict Rules
+
+1. **No Servers**: Never create an Express/Node.js server. All backend logic must be in Supabase Edge Functions or handled by PostgreSQL triggers/RLS.
+2. **TypeScript Only**: All files must be `.ts` or `.tsx`. No `.js` files allowed (except config files).
+3. **Strict Types**: Never use `any`. Always use the generated types from `src/types/database.ts`.
+4. **Styling**: Use React Native `StyleSheet.create`. No external styling libraries (Tailwind, NativeWind, styled-components) unless explicitly requested.
+5. **Data Access**: Components must NEVER call Supabase directly. All data access MUST go through RTK Query hooks (e.g., `useGetItemsQuery()`).

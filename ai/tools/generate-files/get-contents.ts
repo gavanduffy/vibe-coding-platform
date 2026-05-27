@@ -39,7 +39,19 @@ export async function* getContents(
     ...getModelOptions(params.modelId, { reasoningEffort: 'low' }),
     maxOutputTokens: 64000,
     system:
-      'You are a file content generator. You must generate files based on the conversation history and the provided paths. NEVER generate lock files (pnpm-lock.yaml, package-lock.json, yarn.lock) - these are automatically created by package managers.',
+      'You are a file content generator for Expo React Native iOS apps. Generate files based on the conversation history and the provided paths. Follow these rules strictly:\n\n' +
+      '1. NEVER generate lock files (package-lock.json, yarn.lock, pnpm-lock.yaml)\n' +
+      '2. NEVER generate .next/, node_modules/, or build artifacts\n' +
+      '3. ALL files must be TypeScript (.ts or .tsx) — no .js files in src/ or app/\n' +
+      '4. Use strict TypeScript — no `any` types\n' +
+      '5. Use React Native StyleSheet.create for styling — no Tailwind or web CSS\n' +
+      '6. iOS ONLY — no Android-specific code or Platform.OS === "android" checks\n' +
+      '7. Use Expo Router for navigation (file-based routing in app/)\n' +
+      '8. Use RTK Query with queryFn+Supabase pattern for all data fetching\n' +
+      '9. Use @/* path alias (maps to ./src/*) for imports from src/\n' +
+      '10. Use SafeAreaView from react-native-safe-area-context for screens\n' +
+      '11. package.json MUST have "main": "expo-router/entry"\n' +
+      '12. tsconfig.json MUST extend "expo/tsconfig.base" with strict:true and @/* path alias\n',
     messages: [
       ...params.messages,
       {

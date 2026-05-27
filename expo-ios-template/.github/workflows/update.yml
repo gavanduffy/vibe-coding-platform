@@ -1,0 +1,63 @@
+name: EAS Update (OTA)
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "Update message"
+        required: true
+        default: "Bug fixes and improvements"
+      branch:
+        description: "Update branch/channel"
+        required: true
+        default: "preview"
+        type: choice
+        options:
+          - preview
+          - production
+  push:
+    branches:
+      - "update/**"
+
+jobs:
+  update:
+    name: Push OTA Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 Type check
+        run: npm run typecheck
+
+      - name: 🚀 Push update
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            eas update \
+              --branch ${{ github.event.inputs.branch }} \
+              --message "${{ github.event.inputs.message }}" \
+              --non-interactive
+          else
+            # For push events on update/* branches, use auto detection
+            eas update --auto --non-interactive
+          fi
+
+      - name: ✅ Update published
+        run: |
+          echo "✅ OTA update published successfully"
+          echo "Users will receive the update on next app launch"
