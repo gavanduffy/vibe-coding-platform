@@ -24,6 +24,6 @@ export const MODEL_NAMES: Record<string, string> = {
 }
 
 export const TEST_PROMPTS = [
-  'Generate a Next.js app that allows to list and search Pokemons',
+  'Generate an Expo Go-compatible iOS app for tracking workouts with tabs and local state',
   'Create a `golang` server that responds with "Hello World" to any request',
 ]

@@ -48,12 +48,12 @@ export function Welcome(props: {
         >
           <div className="p-6 space-y-4 ">
             <h1 className="text-2xl sans-serif font-semibold tracking-tight mb-7">
-              OSS Vibe Coding Platform
+              Expo Go Vibe Coding Platform
             </h1>
             <p className="text-base text-primary">
               This is a <strong>demo</strong> of an end-to-end coding platform
-              where the user can enter text prompts, and the agent will create a
-              full stack application.
+              where the user can enter text prompts, and the agent will create
+              Expo Go-ready iOS and mobile applications.
             </p>
             <p className="text-base text-secondary-foreground">
               It uses Vercel&apos;s AI Cloud services like{' '}
@@ -68,7 +68,11 @@ export function Welcome(props: {
               <ExternalLink href="https://vercel.com/fluid">
                 Fluid Compute
               </ExternalLink>{' '}
-              for efficient rendering and streaming, and it&apos;s built with{' '}
+              for efficient rendering and streaming. It&apos;s tuned for{' '}
+              <ExternalLink href="https://expo.dev/go">
+                Expo Go
+              </ExternalLink>{' '}
+              workflows alongside{' '}
               <ExternalLink href="https://nextjs.org/">Next.js</ExternalLink>{' '}
               and the{' '}
               <ExternalLink href="https://ai-sdk.dev/docs/introduction">

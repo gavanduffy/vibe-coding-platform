@@ -21,7 +21,7 @@ export const getSandboxURL = ({ writer }: Params) =>
       port: z
         .number()
         .describe(
-          'The port number where a service is running inside the Vercel Sandbox (e.g., 3000 for Next.js dev server, 8000 for Python apps, 5000 for Flask). The port must have been exposed when the sandbox was created or when running commands.'
+          'The port number where a service is running inside the Vercel Sandbox (e.g., 3000 for Next.js dev server, 8081 for Expo / Metro, 8000 for Python apps, 5000 for Flask). The port must have been exposed when the sandbox was created or when running commands.'
         ),
     }),
     execute: async ({ sandboxId, port }, { toolCallId }) => {

@@ -27,7 +27,7 @@ export const createSandbox = ({ writer }: Params) =>
         .max(2)
         .optional()
         .describe(
-          'Array of network ports to expose and make accessible from outside the Vercel Sandbox. These ports allow web servers, APIs, or other services running inside the Vercel Sandbox to be reached externally. Common ports include 3000 (Next.js), 8000 (Python servers), 5000 (Flask), etc.'
+          'Array of network ports to expose and make accessible from outside the Vercel Sandbox. These ports allow web servers, APIs, or other services running inside the Vercel Sandbox to be reached externally. Common ports include 3000 (Next.js), 8081 (Expo / Metro), 8000 (Python servers), and 5000 (Flask).'
         ),
     }),
     execute: async ({ timeout, ports }, { toolCallId }) => {

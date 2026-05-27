@@ -21,7 +21,7 @@ Use Get Sandbox URL when:
 ## Best Practices
 
 - Only call this tool after the server process has successfully started
-- Use typical ports based on framework defaults (e.g., 3000 for Next.js, 5173 for Vite, 8080 for Node APIs)
+- Use typical ports based on framework defaults (e.g., 3000 for Next.js, 5173 for Vite, 8081 for Expo / Metro, 8080 for Node APIs)
 - If multiple services run on different ports, ensure each port was exposed up front during sandbox creation
 - Don’t attempt to expose or discover ports dynamically after creation — only predefined ports are valid
 
@@ -49,4 +49,4 @@ Assistant:
 
 ## Summary
 
-Use Get Sandbox URL to access live previews of services running inside the sandbox — but only for ports that were explicitly exposed during sandbox creation. If the port wasn’t declared, it will not be accessible externally.
+Use Get Sandbox URL to access live previews of services running inside the sandbox — but only for ports that were explicitly exposed during sandbox creation. If the port wasn’t declared, it will not be accessible externally. For Expo Go, pair this with the Metro bundler output and Expo Go connection flow rather than a browser preview.

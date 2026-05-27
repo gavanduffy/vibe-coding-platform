@@ -1,6 +1,6 @@
 # Vibe Coding Platform
 
-An end-to-end coding platform where users enter text prompts and an AI agent generates full-stack applications in a sandboxed environment with live preview, file explorer, and command logs.
+An end-to-end coding platform where users enter text prompts and an AI agent generates Expo Go-compatible iOS and mobile applications in a sandboxed environment with live preview, file explorer, and command logs.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?demo-description=A+full-stack+coding+platform+built+with+Vercel%27s+AI+Cloud%2C+AI+SDK%2C+and+Next.js.&demo-image=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Fv1754588832%2FOSSvibecodingplatform%2Fscreenshot.png&demo-title=Vibe+Coding+Platform&demo-url=https%3A%2F%2Fvercel.fyi%2Fvibes&project-name=Vibe+Coding+Platform&repository-name=vibe-coding-platform&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fexamples%2Ftree%2Fmain%2Fapps%2Fvibe-coding-platform&from=vibe-coding-platform-app)
 
@@ -8,7 +8,7 @@ An end-to-end coding platform where users enter text prompts and an AI agent gen
 
 - Multi-model support via AI Gateway (Claude, GPT, Grok)
 - Secure code execution with Vercel Sandbox
-- Real-time live preview of generated apps
+- Real-time live preview of generated apps and Expo Go workflows
 - File explorer for browsing project files
 - Command logs and error monitoring
 - One-click deploy to Vercel
